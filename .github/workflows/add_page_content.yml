@@ -1,0 +1,25 @@
+name: Voeg inhoud toe aan sub-pagina's
+
+on:
+  workflow_dispatch:
+
+jobs:
+  content:
+    runs-on: ubuntu-latest
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/maison-bu-marketing-system-W0eBb
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installeer dependencies
+        run: pip install requests
+
+      - name: Voeg inhoud toe aan sub-pagina's
+        run: python tools/notion_content_adder.py
