@@ -1,0 +1,24 @@
+name: Build Notion Marketing OS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/maison-bu-marketing-system-W0eBb
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installeer dependencies
+        run: pip install requests python-dotenv
+
+      - name: Bouw Notion Marketing OS
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: python tools/notion_builder.py
