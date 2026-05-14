@@ -18,17 +18,34 @@ jobs:
       - name: Installeer dependencies
         run: pip install requests python-dotenv
 
-      - name: Test Notion verbinding
+      - name: Maak root pagina aan via curl
+        id: rootpage
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: |
-          echo "Token aanwezig: $([ -n "$NOTION_TOKEN" ] && echo JA || echo NEE)"
-          curl -s -w "\nHTTP status: %{http_code}\n" \
+          echo "Pagina aanmaken in Notion..."
+          RESPONSE=$(curl -s -X POST https://api.notion.com/v1/pages \
             -H "Authorization: Bearer $NOTION_TOKEN" \
             -H "Notion-Version: 2022-06-28" \
-            https://api.notion.com/v1/users/me
+            -H "Content-Type: application/json" \
+            -d '{"parent":{"type":"workspace","workspace":true},"properties":{"title":{"title":[{"text":{"content":"Maison BU Marketing OS"}}]}}}')
+          echo "API response: $RESPONSE"
+          PAGE_ID=$(echo $RESPONSE | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('id',''))" 2>/dev/null || echo "")
+          if [ -z "$PAGE_ID" ]; then
+            echo "Workspace aanmaken mislukt, zoek bestaande pagina..."
+            SEARCH=$(curl -s -X POST https://api.notion.com/v1/search \
+              -H "Authorization: Bearer $NOTION_TOKEN" \
+              -H "Notion-Version: 2022-06-28" \
+              -H "Content-Type: application/json" \
+              -d '{"filter":{"property":"object","value":"page"},"page_size":1}')
+            echo "Search response: $SEARCH"
+            PAGE_ID=$(echo $SEARCH | python3 -c "import sys,json; d=json.load(sys.stdin); r=d.get('results',[]); print(r[0]['id'] if r else '')" 2>/dev/null || echo "")
+          fi
+          echo "page_id=$PAGE_ID" >> $GITHUB_OUTPUT
+          echo "Gevonden pagina ID: $PAGE_ID"
 
       - name: Bouw Notion Marketing OS
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-        run: python tools/notion_builder.py
+          NOTION_PARENT_ID: ${{ steps.rootpage.outputs.page_id }}
+        run: python tools/notion_builder.py $NOTION_PARENT_ID
