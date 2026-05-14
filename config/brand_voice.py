@@ -60,7 +60,7 @@ BRAND_IDENTITY = {
     "location": "Hasselt, Belgium",
     "category": "High-end Hair & Beauty Lab",
     "positioning": "A creative house, a cultural world and a philosophy of beauty and hospitality — not a salon.",
-    "language_register": "English (with occasional French accents). Refined, editorial, precise.",
+    "language_register": "Nederlands (primaire taal voor alle output). Verfijnd, editorial, precies. Af en toe een Frans accent voor sfeer — nooit Engelstalige clichés.",
 }
 
 BRAND_MANIFESTO = """
@@ -158,40 +158,40 @@ GUEST_JOURNEY = {
 # ─────────────────────────────────────────────────────────────
 
 THE_SPACE = """
-Maison BU exists within one of the most architecturally iconic buildings in Hasselt.
-The heritage façade creates a sense of presence, elegance and permanence before
-a guest ever steps inside.
+Maison BU bevindt zich in een van de meest architecturaal iconische gebouwen van Hasselt.
+De historische gevel schept een gevoel van aanwezigheid, elegantie en duurzaamheid
+voordat een gast ooit binnenstapt.
 
-Inside: modern, quiet, deeply intentional. The contrast between heritage architecture
-and contemporary restraint creates something simultaneously timeless and unexpected.
+Binnen: modern, stil, diep intentioneel. Het contrast tussen erfgoedarchitectuur
+en hedendaagse terughoudendheid creëert iets dat tegelijkertijd tijdloos en onverwacht is.
 
-Materials: concrete, stone, soft wood tones, glass, dark metal structures.
-Light: natural daylight moves gently through the space during the day.
-Artificial lighting is soft, cinematic and atmospheric — never clinical.
+Materialen: beton, steen, zachte houttinten, glas, donkere metaalstructuren.
+Licht: natuurlijk daglicht beweegt zacht door de maison overdag.
+Kunstmatige verlichting is zacht, cinematografisch en sfeervol — nooit klinisch.
 
-There is air. Space. Silence between things.
-Nothing overcrowded or visually aggressive. Every object has a reason to exist.
+Er is lucht. Ruimte. Stilte tussen de dingen.
+Niets overweldigt of is visueel agressief. Elk object heeft een reden om te bestaan.
 
-The atmosphere sits closer to a private members club, contemporary gallery or
-luxury hospitality space than to any traditional salon.
+De sfeer staat dichter bij een private members club, hedendaagse galerij of
+een verfijnd hospitality-concept dan bij welke traditionele salon ook.
 
-Music: soft electronic, ambient lounge, subtle house or near silence.
-Enough to shape emotion. Never enough to dominate the room.
+Muziek: zachte elektronica, ambient lounge, subtiele house of bijna stilte.
+Genoeg om emotie te vormen. Nooit genoeg om de ruimte te domineren.
 
-Scent: clean, refined — somewhere between a luxury hotel and an understated perfume.
-Never overpowering. Just enough to become part of the memory.
+Geur: clean, verfijnd — ergens tussen een luxehotel en een ingetogen parfum.
+Nooit overweldigend. Net genoeg om deel te worden van de herinnering.
 
-Deliberately absent:
-— No overwhelming product walls
-— No visual chaos or commercial posters
-— No rushed salon energy
-— No plastic shine or artificial glamour
-— No exaggerated "luxury" staging
+Bewust afwezig:
+— Geen overweldigende productmuren
+— Geen visuele chaos of commerciële affiches
+— Geen gehaaste salonenenergie
+— Geen plastic glans of kunstmatige glamour
+— Geen overdreven statussignalering
 
-Art is not decoration. It is part of the emotional world of Maison BU itself.
+Kunst is geen decoratie. Het is deel van de emotionele wereld van Maison BU zelf.
 
-If the space could speak:
-"You can slow down now. You are being taken care of."
+Als de maison kon spreken:
+"Je kan nu vertragen. Je wordt verzorgd."
 """
 
 # ─────────────────────────────────────────────────────────────
@@ -497,10 +497,13 @@ VOCABULARY = {
         "luminous", "sculpted", "movement", "silk", "velvet", "warmth",
         "golden hour", "soft light", "texture", "radiant", "porcelain",
         # hospitality
-        "guest", "atelier", "maison", "devoted", "received", "welcomed",
-        "curated", "immersive", "transformative", "rare",
-        # French accents (sparingly, for atmosphere)
-        "maison", "atelier", "savoir-faire", "l'invitation",
+        "gast", "maison", "toegewijd", "ontvangen", "verwelkomd",
+        "gecureerd", "meeslepend", "transformatief", "zeldzaam",
+        # Nederlandstalige kernwoorden
+        "verfijning", "vakmanschap", "aanwezigheid", "tijdloos",
+        "zorgvuldig", "bewust", "persoonlijk", "intiem",
+        # Franse accenten (spaarzaam, voor atmosfeer)
+        "maison", "savoir-faire", "l'invitation", "signature",
     ],
     "avoid": [
         # cheapening
@@ -537,28 +540,28 @@ FORBIDDEN_CONCEPTS = [
 ]
 
 APPROVED_BOOKING_PHRASES = [
-    "A few moments remain.",
-    "Private appointments available.",
-    "Discover the experience.",
-    "Step inside.",
-    "Book your ritual.",
-    "A window has opened.",
-    "Reserve your moment.",
-    "The atelier is ready to receive you.",
-    "One appointment remains this week.",
-    "An opening has appeared.",
+    "Er zijn nog een paar momenten beschikbaar.",
+    "Privé-afspraken beschikbaar.",
+    "Ontdek de ervaring.",
+    "Stap binnen.",
+    "Reserveer jouw ritueel.",
+    "Er is een opening verschenen.",
+    "Reserveer jouw moment.",
+    "De maison staat klaar om je te ontvangen.",
+    "Er is nog één afspraak beschikbaar deze week.",
+    "Er heeft zich een opening voorgedaan.",
 ]
 
 CORE_MANTRAS = [
-    "Timeless beauty, thoughtfully crafted.",
-    "Felt long after leaving.",
-    "Refinement in every detail.",
-    "Crafted around the person, never the trend.",
-    "Many salons process appointments. Maison BU receives people.",
-    "Luxury without arrogance. Artistry without ego. Warmth without performance.",
-    "Beauty is not transformation into someone else. It is refinement of identity.",
-    "True luxury is not only seen. It is felt long after the appointment is over.",
-    "Full calendars without losing the soul.",
+    "Tijdloze schoonheid, met zorg gecreëerd.",
+    "Lang gevoeld nadat je vertrokken bent.",
+    "Verfijning in elk detail.",
+    "Gecreëerd rondom de persoon, nooit rondom de trend.",
+    "Veel salons verwerken afspraken. Maison BU ontvangt mensen.",
+    "Luxe zonder arrogantie. Vakmanschap zonder ego. Warmte zonder performance.",
+    "Schoonheid is geen transformatie in iemand anders. Het is verfijning van identiteit.",
+    "Ware verfijning wordt niet alleen gezien. Ze wordt gevoeld, lang nadat de afspraak voorbij is.",
+    "Een volle agenda zonder de ziel te verliezen.",
 ]
 
 # ─────────────────────────────────────────────────────────────
