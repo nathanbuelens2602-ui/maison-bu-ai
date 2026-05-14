@@ -1,0 +1,361 @@
+────────────────────────────────────────────────────────────────────
+  MAISON BU · DE ZOETHEID VAN JUNI · 2026
+  Volledige Mailchimp Campagne
+  Agent: Mail Marketing Director
+────────────────────────────────────────────────────────────────────
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║   ONDERWERPREGEL OPTIES                                          ║
+╚════════════════════════════════════════════════════════════════╝
+
+Optie A — Meest persoonlijk:
+  "Juni. Ik heb aan u gedacht."
+  [26 tekens. Klinkt als Kristof, persoonlijk.]
+
+Optie B — Meest evocatief:
+  "De zoetheid van deze bijzondere maand."
+  [38 tekens. Poëtisch, nieuwsgierig, diep Maison BU.]
+
+Optie C — Meest direct:
+  "Uw zomerritueel begint hier."
+  [29 tekens. Zelfverzekerd, warm, minimaal.]
+
+  ★ AANBEVOLEN: Optie A voor loyale klanten (herboekingssegment)
+  ★ AANBEVOLEN: Optie B voor algemene lijst (campagnelancering)
+
+A/B TEST: Stuur Optie A naar klanten die de afgelopen 6 maanden
+          een bezoek hebben gebracht.
+          Stuur Optie B naar alle anderen.
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║   PREVIEW TEKST OPTIES                                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Gecombineerd met Optie A:
+  "Het licht in de maison is veranderd. Er begint iets moois."
+  [58 tekens. Vervolgt de persoonlijke toon van de onderwerpregel.]
+
+Gecombineerd met Optie B:
+  "Warmer. Rustiger. De manier waarop de maison juni anders draagt."
+  [64 tekens. Zintuiglijk. Trekt hen naar binnen voor ze openen.]
+
+Gecombineerd met Optie C:
+  "Nog een paar juni-afspraken beschikbaar. De maison staat klaar."
+  [64 tekens. Directer — geschikt voor een warmer segment.]
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║   E-MAILBODY — PLAIN TEXT VERSIE                                 ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Aan u —
+
+Juni doet iets bijzonders met de maison.
+
+Het licht betreedt de ruimte op een andere hoek dan in mei.
+Warmer. Meer goud aan de randen. Het beton houdt het langer vast —
+dieper. De spiegels kaatsen het zachter terug dan ze dat in de lente deden.
+
+We bewegen door deze maand met bijzondere aandacht.
+Niet vanwege wat ze commercieel betekent, maar vanwege wat
+ze sfeermatig betekent. Juni heeft zijn eigen kwaliteit. Zijn eigen tempo.
+En die kwaliteit bepaalt alles wat we doen binnen deze muren.
+
+———
+
+Dit is de maand van beweging.
+
+Haar dat opveert in de warmte. Beachwaves, gecreëerd specifiek rondom
+de persoon die ze draagt — haar textuur, haar gezicht, de manier waarop
+ze beweegt door een zomeravond. Kleur die doet wat het zomerlicht doet:
+versterkt wat er al is zonder het aan te kondigen.
+De Signature Cut, opnieuw gedacht voor het seizoen — lichter, vrijer,
+volledig toebehorend aan de weken die voor ons liggen.
+
+En de ceremonies. De huwelijken, de communies, de avonden
+die iets vragen van de mensen die er middenin staan.
+Juni draagt meer ceremonies dan enige andere maand in België.
+We zijn onderdeel geweest van die ochtenden — stil, eerbiedig,
+zoals we altijd zijn.
+
+———
+
+Er zijn nog een paar afspraken beschikbaar voor juni sluit en juli begint.
+
+We zijn niet in het zaken-doen van druk. U weet dit.
+Maar we zijn wel in het zaken-doen van ervoor zorgen dat de mensen
+die hadden willen komen — komen, zolang er nog tijd is.
+
+Als juni de maand is geweest die u van plan was te arriveren —
+dat is hij nog steeds.
+
+De maison is klaar.
+Het team is hier.
+En we zouden u graag ontvangen.
+
+Reserveer uw zomerritueel →
+maisonbu.be/book
+
+Met warmte vanuit de maison —
+
+Kristof & het Maison BU team
+Hasselt · België
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║   E-MAILBODY — HTML VERSIE (Mailchimp)                           ║
+╚══════════════════════════════════════════════════════════════════╝
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Zoetheid van Juni — Maison BU</title>
+</head>
+<body style="margin:0; padding:0; background-color:#EDE9E3;
+             font-family: Georgia, 'Times New Roman', serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0"
+         style="background-color:#EDE9E3; padding: 56px 20px;">
+    <tr>
+      <td align="center">
+
+        <!-- Kaart -->
+        <table width="600" cellpadding="0" cellspacing="0"
+               style="background-color:#FAF8F4; max-width:600px; width:100%;">
+
+          <!-- Bovenste accentlijn -->
+          <tr>
+            <td style="height:3px; background-color:#1A1A18;"></td>
+          </tr>
+
+          <!-- Optionele campagneafbeelding / header -->
+          <!-- Voeg hier een enkele warme editorial afbeelding in indien beschikbaar.
+               Afmetingen: 600 x 340px. Warm, junilicht. De maison.
+               Zonder afbeelding: verwijder deze rij. De tekst staat op zichzelf. -->
+          <!--
+          <tr>
+            <td>
+              <img src="juni-2026-campagne-header.jpg"
+                   width="600" style="display:block; width:100%;" alt="">
+            </td>
+          </tr>
+          -->
+
+          <!-- Maison BU woordmerk -->
+          <tr>
+            <td align="center" style="padding: 44px 56px 4px;">
+              <p style="margin:0; font-size:10px; letter-spacing:0.35em;
+                        color:#999; text-transform:uppercase; font-family:
+                        Arial, Helvetica, sans-serif;">
+                Maison BU &nbsp;&middot;&nbsp; Hasselt
+              </p>
+            </td>
+          </tr>
+
+          <!-- Dunne scheidingslijn -->
+          <tr>
+            <td align="center" style="padding: 20px 56px 12px;">
+              <div style="width:36px; height:1px; background-color:#C9BFB4;"></div>
+            </td>
+          </tr>
+
+          <!-- Campagnetitel -->
+          <tr>
+            <td align="center" style="padding: 0 56px 40px;">
+              <p style="margin:0; font-size:22px; line-height:1.4;
+                        color:#1A1A18; letter-spacing:0.05em;
+                        font-style:italic;">
+                De Zoetheid van Juni
+              </p>
+            </td>
+          </tr>
+
+          <!-- Aanhef -->
+          <tr>
+            <td style="padding: 0 56px 28px; color:#2A2A28;
+                       font-size:15px; line-height:1.85;">
+              Aan u &mdash;
+            </td>
+          </tr>
+
+          <!-- Openingsparagraaf -->
+          <tr>
+            <td style="padding: 0 56px 28px; color:#2A2A28;
+                       font-size:15px; line-height:1.9;">
+              Juni doet iets bijzonders met de maison.<br><br>
+              Het licht betreedt de ruimte op een andere hoek dan in mei.
+              Warmer. Meer goud aan de randen. Het beton houdt het
+              langer vast &mdash; dieper. De spiegels kaatsen het zachter
+              terug dan ze dat in de lente deden.<br><br>
+              We bewegen door deze maand met bijzondere aandacht.
+              Niet vanwege wat ze commercieel betekent,
+              maar vanwege wat ze sfeermatig betekent.
+              Juni heeft zijn eigen kwaliteit. Zijn eigen tempo.
+              En die kwaliteit bepaalt alles wat we doen binnen deze muren.
+            </td>
+          </tr>
+
+          <!-- Eerste sectie scheidingslijn -->
+          <tr>
+            <td align="center" style="padding: 8px 56px 24px;">
+              <div style="width:24px; height:1px; background-color:#C9BFB4;"></div>
+            </td>
+          </tr>
+
+          <!-- Lichaam — De craftsectie -->
+          <tr>
+            <td style="padding: 0 56px 28px; color:#2A2A28;
+                       font-size:15px; line-height:1.9;">
+              Dit is de maand van beweging.<br><br>
+              Haar dat opveert in de warmte. Beachwaves, gecreëerd
+              specifiek rondom de persoon die ze draagt &mdash;
+              haar textuur, haar gezicht, de manier waarop ze beweegt
+              door een zomeravond. Kleur die doet wat het zomerlicht doet:
+              versterkt wat er al is zonder het aan te kondigen.
+              De Signature Cut, opnieuw gedacht voor het seizoen &mdash; lichter,
+              vrijer, volledig toebehorend aan de weken die voor ons liggen.<br><br>
+              En de ceremonies. De huwelijken, de communies, de avonden
+              die iets vragen van de mensen die er middenin staan.
+              Juni draagt meer ceremonies dan enige andere maand in België.
+              We zijn onderdeel geweest van die ochtenden &mdash; stil,
+              eerbiedig &mdash; zoals we altijd zijn.
+            </td>
+          </tr>
+
+          <!-- Tweede sectie scheidingslijn -->
+          <tr>
+            <td align="center" style="padding: 8px 56px 24px;">
+              <div style="width:24px; height:1px; background-color:#C9BFB4;"></div>
+            </td>
+          </tr>
+
+          <!-- Uitnodigingsparagraaf -->
+          <tr>
+            <td style="padding: 0 56px 12px; color:#2A2A28;
+                       font-size:15px; line-height:1.9;">
+              Er zijn nog een paar afspraken beschikbaar voor
+              juni sluit en juli begint.<br><br>
+              We zijn niet in het zaken-doen van druk. U weet dit.
+              Maar we zijn wel in het zaken-doen van ervoor zorgen
+              dat de mensen die hadden willen komen &mdash; komen,
+              zolang er nog tijd is.<br><br>
+              Als juni de maand is geweest die u van plan was
+              te arriveren &mdash; dat is hij nog steeds.
+            </td>
+          </tr>
+
+          <!-- CTA Knop -->
+          <tr>
+            <td align="center" style="padding: 36px 56px 44px;">
+              <a href="https://maisonbu.be/book"
+                 style="display:inline-block;
+                        background-color:#1A1A18;
+                        color:#F8F5F0;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size:11px;
+                        letter-spacing:0.22em;
+                        text-transform:uppercase;
+                        text-decoration:none;
+                        padding: 17px 40px;">
+                Reserveer uw zomerritueel
+              </a>
+            </td>
+          </tr>
+
+          <!-- Tweede scheidingslijn -->
+          <tr>
+            <td align="center" style="padding: 0 56px 28px;">
+              <div style="width:36px; height:1px; background-color:#C9BFB4;"></div>
+            </td>
+          </tr>
+
+          <!-- Ondertekening -->
+          <tr>
+            <td style="padding: 0 56px 52px; color:#888;
+                       font-size:13px; line-height:1.8; font-style:italic;">
+              Met warmte vanuit de maison &mdash;<br>
+              Kristof &amp; het Maison BU team<br>
+              Hasselt &middot; Belgi&euml;
+            </td>
+          </tr>
+
+          <!-- Onderste accentlijn -->
+          <tr>
+            <td style="height:3px; background-color:#1A1A18;"></td>
+          </tr>
+
+          <!-- Voettekst -->
+          <tr>
+            <td align="center"
+                style="padding: 28px 56px; color:#BBB; font-size:11px;
+                       letter-spacing:0.08em; font-family: Arial, sans-serif;">
+              <a href="*|UNSUB|*"
+                 style="color:#BBB; text-decoration:none;">Uitschrijven</a>
+              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+              <a href="https://maisonbu.be"
+                 style="color:#BBB; text-decoration:none;">maisonbu.be</a>
+              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+              Hasselt, Belgi&euml;
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║   MAILCHIMP CAMPAGNE INSTELLINGEN                                ║
+╚══════════════════════════════════════════════════════════════════╝
+
+Verzendtijd:
+  Dinsdag 9 juni — 09:15 (Week 2-lancering, na wereldopbouwweek)
+  Een tweede verzending kan worden overwogen in Week 4
+  (alleen herboeking-segment)
+
+Afzendernaam:     Kristof · Maison BU
+Afzenderadres:    hello@maisonbu.be
+Antwoord-naar:    hello@maisonbu.be
+
+Doelgroep:
+  Primaire lijst: alle actieve abonnees
+  Segment A (herboeking): abonnees die de afgelopen 90 dagen
+    geen e-mail hebben geopend
+    → Sturen met Onderwerpregel Optie A
+      ("Juni. Ik heb aan u gedacht.")
+  Segment B (loyale klanten): laatste bezoek binnen 6 maanden
+    → Sturen met Onderwerpregel Optie B
+      ("De zoetheid van deze bijzondere maand.")
+
+Tracking:
+  Openingspercentage doel: 35–42% (boven branchegemiddelde beauty)
+  Klikpercentage doel: 4–7%
+  Bij openingspercentage onder 28%: test Onderwerpregel C
+    opnieuw sturen naar niet-openers na 72 uur,
+    alleen met aangepaste preview tekst.
+
+Controlelijst voor verzending:
+  ☐ Hardop lezen als Kristof — klinkt het menselijk?
+  ☐ Onderwerpregel getest op mobiel (preview volledig zichtbaar)
+  ☐ Boekingslink getest en actief
+  ☐ Uitschrijflink functioneel
+  ☐ Geen kapotte afbeeldingen (indien headerafbeelding gebruikt)
+  ☐ Plain text versie leesbaar zonder HTML
+  ☐ Slechts één CTA — bevestigd
+  ☐ Geen verboden woorden in de tekst
+  ☐ Taal: Nederlands — geen Engelse clichés
+  ☐ "Atelier" nergens aanwezig — altijd "de maison"
+
+────────────────────────────────────────────────────────────────────
+  Maison BU · De Zoetheid van Juni · 2026
+  Mailchimp Campagne — Vertrouwelijk · Intern gebruik
+────────────────────────────────────────────────────────────────────
