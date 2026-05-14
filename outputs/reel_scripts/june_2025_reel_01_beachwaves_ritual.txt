@@ -1,0 +1,167 @@
+────────────────────────────────────────────────────────────
+  MAISON BU — REEL SCRIPT 01
+  "The Beachwaves Ritual"
+  Type: Ritual · Duration: 45 seconds
+  Campaign: La Douceur de Juin
+────────────────────────────────────────────────────────────
+
+
+═══════════════════════════════════════════════════════════
+  REEL CONCEPT
+═══════════════════════════════════════════════════════════
+
+A single morning in the atelier. A single guest.
+A ritual that moves at the speed of intention.
+
+This reel does not explain what beachwaves are.
+It makes the viewer feel what it is to receive them —
+the warmth of someone's hands in your hair, the weight
+of the wand, the release of each curl, and the final
+quiet moment when the guest and the mirror simply look
+at each other.
+
+The emotional promise: effortless beauty is not an accident.
+It is the result of someone who cared enough to make it look that way.
+
+
+═══════════════════════════════════════════════════════════
+  SHOT LIST
+═══════════════════════════════════════════════════════════
+
+[SHOT 1] 0:00–0:04 — HOOK
+Extreme close-up of a single strand of hair being wrapped
+around the wand. The metal catches the studio light. The hair
+is warm-toned, natural, slightly damp from the brushing.
+Camera: static, macro lens, rack focus from the wand to the hair.
+
+[SHOT 2] 0:04–0:09
+Pull back slowly to reveal the stylist's hands — controlled,
+deliberate, graceful. The angle is from above and slightly behind.
+We see the texture of the hair, the movement of wrists.
+Nothing rushed. Everything decided.
+Camera: slow pull-back, handheld but steady.
+
+[SHOT 3] 0:09–0:16
+Cut to the guest's profile — eyes closed, slightly tilted
+toward the light from the window. Not performing. Simply resting.
+The atelier is visible behind her: concrete, soft light, stillness.
+Camera: static. The camera breathes but does not move.
+
+[SHOT 4] 0:16–0:24
+Return to hands. A second section released from the wand.
+The curl falls in slow motion — we watch it settle, catch the light,
+find its place among the others. Golden. Alive.
+Camera: static macro. Slow motion (120fps played at 50%).
+
+[SHOT 5] 0:24–0:32
+Wide shot of the full atelier treatment station — the guest,
+the stylist, the tools laid out with intention, the warm light
+filling the room at an angle. Beautiful and quiet as a painting.
+Camera: static wide. Let the scene breathe for 4 full seconds.
+
+[SHOT 6] 0:32–0:40
+The stylist's fingers move through the finished waves —
+separating them gently, adding the final form. Extreme close-up
+of hair moving between fingers. Silk-like. The texture is everything.
+Camera: slow tracking from left to right, following the hands.
+
+[SHOT 7] 0:40–0:45 — CLOSE
+The guest opens her eyes. She looks at herself in the mirror.
+No words. No reaction performed for the camera.
+Just the quiet recognition of someone who has been seen.
+Camera: medium shot, from behind the guest, the mirror shows her face.
+The frame holds for 3 full seconds before the text fades in.
+
+
+═══════════════════════════════════════════════════════════
+  ON-SCREEN TEXT
+═══════════════════════════════════════════════════════════
+
+00:00–00:03  [No text. Let the image arrive first.]
+
+00:38–00:42  Text fades in, lower third:
+             "Beachwaves. Crafted around you."
+             Typography: thin white serif, tracked wide, lowercase.
+             Entry: slow fade in (1 second). Hold 4 seconds. Fade out.
+
+00:43–00:45  Final frame:
+             "Maison BU · Hasselt"
+             Same typeface. Smaller. Centred.
+
+
+═══════════════════════════════════════════════════════════
+  AUDIO DIRECTION
+═══════════════════════════════════════════════════════════
+
+Music:
+  Mood: warm, unhurried, European summer evening
+  Tempo: slow (60–70 BPM)
+  Reference tracks:
+    — Sébastien Tellier, "La Ritournelle" (instrumental passages)
+    — Air, "Ce matin là"
+    — Nils Frahm, "Says"
+    — Ólafur Arnalds, "Near Light"
+  Direction: Begin quietly, let the music breathe with the images.
+             Never let it peak. It should feel like the room's own warmth.
+
+Sound design (layered underneath):
+  — The soft pull of a brush through hair at 00:00
+  — The faint ambient of the atelier — barely audible
+  — The release of the wand's barrel at 00:04 (a soft click)
+  — Complete silence would also work — the music alone is enough
+
+No voiceover.
+
+
+═══════════════════════════════════════════════════════════
+  CAPTION COPY
+═══════════════════════════════════════════════════════════
+
+The wand lifts. The curl releases.
+It falls — not into place, but into itself.
+
+Beachwaves at Maison BU are never about the beach.
+They are about finding the version of you that moves
+through summer with the quiet confidence of someone
+who has never once tried too hard.
+
+Each section, considered.
+Each wave, placed with intention.
+The result should look as though nothing happened —
+only that something settled.
+
+Link in bio to reserve your summer ritual.
+
+#MaisonBU #BeachwavesAtelier #HairRitual #TailorMadeHair
+#SummerHair2025 #SlowBeauty #HairArtistry #MaisonBUHasselt
+
+
+═══════════════════════════════════════════════════════════
+  PRODUCTION NOTES
+═══════════════════════════════════════════════════════════
+
+Lens: 85mm or 100mm macro for close-ups. 35mm for wider shots.
+      No wide-angle distortion near the face or hands.
+
+Colour grade:
+  Warm, filmic. Slightly desaturated highlights. Golden shadows.
+  Lift the orange-yellow channel in skin tones and hair.
+  Reference grade: Loewe SS campaign, or Aesop product films.
+  No cold tones. No clinical white balance.
+
+Lighting:
+  Primary: natural window light from camera left, diffused.
+  Fill: a warm reflector only — no artificial key lights visible.
+  No ring lights. No beauty dish. Never clinical or flat.
+
+Must-capture moments:
+  — The exact moment the curl is released from the wand (slow motion essential)
+  — The guest's face in natural profile light — unposed
+  — The texture of finished beachwaves in raking window light
+
+What to avoid:
+  — Any moment that looks "salon" — rushed, clinical, commercial
+  — Forced smiles or posed reactions
+  — The camera moving too fast at any point
+  — Overhead ring-light reflections in mirrors or eyes
+  — Any visual element that could belong to a different brand

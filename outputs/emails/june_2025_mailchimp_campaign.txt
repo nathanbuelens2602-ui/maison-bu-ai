@@ -1,0 +1,262 @@
+────────────────────────────────────────────────────────────
+  MAISON BU — JUNE 2025 EMAIL CAMPAIGN
+  "La Douceur de Juin"
+  Agent: Mail Marketing
+  Platform: Mailchimp
+────────────────────────────────────────────────────────────
+
+
+═══════════════════════════════════════════════════════════
+  SUBJECT LINE OPTIONS
+  (ranked: most personal → most evocative)
+═══════════════════════════════════════════════════════════
+
+Option A (personal, intimate):
+  "June is the month I think of you."
+
+Option B (poetic, seasonal):
+  "The light in the atelier has changed."
+
+Option C (direct elegance):
+  "Your summer ritual, before July."
+
+Recommended: Option B
+Reason: Creates immediate sensory curiosity. Implies change,
+        invitation and intimacy without naming a service or an offer.
+        The reader thinks: "What do they mean? I want to know."
+
+
+═══════════════════════════════════════════════════════════
+  PREVIEW TEXT OPTIONS
+  (paired with Option B subject line)
+═══════════════════════════════════════════════════════════
+
+Option A: "Warmer. Slower. The way we love it here."
+Option B: "Summer hair begins with one quiet decision."
+Option C: "A few moments remain in June. One of them is yours."
+
+Recommended: Option A — it completes the subject line as a single
+             sensory thought. The reader already feels inside the atelier
+             before they open the email.
+
+
+═══════════════════════════════════════════════════════════
+  EMAIL BODY
+  Full version — plain text / rich text
+═══════════════════════════════════════════════════════════
+
+[Salutation]
+To you, wherever June finds you —
+
+[Opening]
+The light in the Maison BU atelier does something particular this month.
+
+It arrives earlier and stays later. It falls through the windows at an angle
+we only see in June — warm and slightly gold, the kind that makes everything
+look the way it should. The stone holds it. The mirrors return it, softened.
+
+We have been moving through the days here with particular attention.
+June asks us to slow down, and we have listened.
+
+[Body — The Craft]
+This month at Maison BU, we have been thinking about effortlessness.
+
+Not simplicity — effortlessness. There is a difference.
+Effortlessness requires mastery. It requires knowing exactly what to do,
+and more importantly, what to leave undone.
+
+That philosophy shapes everything we are offering this June:
+beachwaves crafted specifically around your hair, your face, your movement —
+never a formula, always a conversation. Signature Cuts that arrive at the
+person rather than the trend. Tailor-made brushings for the evenings
+that deserve to begin with intention.
+
+Summer hair, in the Maison BU way, should feel as though it simply happened.
+As though you woke up like this, or stepped in from somewhere beautiful.
+The craft is ours. The ease is yours.
+
+[The Invitation]
+A few June appointments remain. We would love to receive you before the month closes
+and the calendar fills for July.
+
+[CTA Button]
+Reserve your summer ritual
+
+[Link: https://maisonbu.be/book]
+
+[Sign-off]
+With warmth from the atelier —
+
+Kristof & the Maison BU team
+Hasselt · Belgium
+
+
+═══════════════════════════════════════════════════════════
+  HTML VERSION — MAILCHIMP STRUCTURE
+═══════════════════════════════════════════════════════════
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Douceur de Juin — Maison BU</title>
+</head>
+<body style="margin:0; padding:0; background-color:#F4F1EC; font-family: Georgia, 'Times New Roman', serif;">
+
+  <!-- Wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#F4F1EC; padding: 48px 20px;">
+    <tr>
+      <td align="center">
+
+        <!-- Card -->
+        <table width="580" cellpadding="0" cellspacing="0"
+               style="background-color:#FAFAF8; max-width:580px; width:100%;">
+
+          <!-- Header image area -->
+          <tr>
+            <td style="height:4px; background-color:#1A1A18;"></td>
+          </tr>
+
+          <!-- Logo + name -->
+          <tr>
+            <td align="center" style="padding: 40px 48px 8px;">
+              <p style="margin:0; font-size:11px; letter-spacing:0.3em; color:#888; text-transform:uppercase;">
+                Maison BU · Hasselt
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td align="center" style="padding: 16px 48px;">
+              <div style="width:40px; height:1px; background-color:#C9C0B3;"></div>
+            </td>
+          </tr>
+
+          <!-- Salutation -->
+          <tr>
+            <td style="padding: 0 48px 24px; color:#1A1A18; font-size:15px; line-height:1.7;">
+              To you, wherever June finds you &mdash;
+            </td>
+          </tr>
+
+          <!-- Opening paragraph -->
+          <tr>
+            <td style="padding: 0 48px 24px; color:#2C2C2A; font-size:15px; line-height:1.85;">
+              The light in the Maison BU atelier does something particular this month.<br><br>
+              It arrives earlier and stays later. It falls through the windows at an angle
+              we only see in June &mdash; warm and slightly gold, the kind that makes everything
+              look the way it should. The stone holds it. The mirrors return it, softened.<br><br>
+              We have been moving through the days here with particular attention.
+              June asks us to slow down, and we have listened.
+            </td>
+          </tr>
+
+          <!-- Section divider -->
+          <tr>
+            <td align="center" style="padding: 16px 48px;">
+              <div style="width:24px; height:1px; background-color:#C9C0B3;"></div>
+            </td>
+          </tr>
+
+          <!-- Body paragraph -->
+          <tr>
+            <td style="padding: 0 48px 24px; color:#2C2C2A; font-size:15px; line-height:1.85;">
+              This month at Maison BU, we have been thinking about effortlessness.<br><br>
+              Not simplicity &mdash; effortlessness. There is a difference.
+              Effortlessness requires mastery. It requires knowing exactly what to do,
+              and more importantly, what to leave undone.<br><br>
+              That philosophy shapes everything we are offering this June:
+              beachwaves crafted specifically around your hair, your face, your movement.
+              Signature Cuts that arrive at the person rather than the trend.
+              Tailor-made brushings for evenings that deserve to begin with intention.<br><br>
+              Summer hair, in the Maison BU way, should feel as though it simply happened.
+              The craft is ours. The ease is yours.
+            </td>
+          </tr>
+
+          <!-- Section divider -->
+          <tr>
+            <td align="center" style="padding: 16px 48px;">
+              <div style="width:24px; height:1px; background-color:#C9C0B3;"></div>
+            </td>
+          </tr>
+
+          <!-- Invitation paragraph -->
+          <tr>
+            <td style="padding: 0 48px 32px; color:#2C2C2A; font-size:15px; line-height:1.85;">
+              A few June appointments remain. We would love to receive you
+              before the month closes and the calendar fills for July.
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td align="center" style="padding: 0 48px 48px;">
+              <a href="https://maisonbu.be/book"
+                 style="display:inline-block; background-color:#1A1A18; color:#F4F1EC;
+                        font-family: Georgia, serif; font-size:12px; letter-spacing:0.2em;
+                        text-transform:uppercase; text-decoration:none;
+                        padding: 16px 36px;">
+                Reserve your summer ritual
+              </a>
+            </td>
+          </tr>
+
+          <!-- Sign-off -->
+          <tr>
+            <td style="padding: 0 48px 48px; color:#888; font-size:13px; line-height:1.7; font-style:italic;">
+              With warmth from the atelier &mdash;<br>
+              Kristof &amp; the Maison BU team<br>
+              Hasselt &middot; Belgium
+            </td>
+          </tr>
+
+          <!-- Footer bar -->
+          <tr>
+            <td style="height:4px; background-color:#1A1A18;"></td>
+          </tr>
+
+          <!-- Footer links -->
+          <tr>
+            <td align="center" style="padding: 24px; color:#AAA; font-size:11px;
+                letter-spacing:0.1em; font-family: Arial, sans-serif;">
+              <a href="*|UNSUB|*" style="color:#AAA; text-decoration:none;">Unsubscribe</a>
+              &nbsp;&nbsp;·&nbsp;&nbsp;
+              <a href="https://maisonbu.be" style="color:#AAA; text-decoration:none;">maisonbu.be</a>
+            </td>
+          </tr>
+
+        </table>
+        <!-- End card -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+
+═══════════════════════════════════════════════════════════
+  MAILCHIMP SETUP NOTES
+═══════════════════════════════════════════════════════════
+
+Send time:       Tuesday or Wednesday, 9:00–10:00 AM
+                 (when the guest is past the Monday rush but not yet
+                 in the Friday wind-down)
+
+Audience:        All active subscribers + previous clients
+Segment option:  Test sending Option A subject to clients who haven't
+                 booked in 2+ months (re-engagement angle)
+
+A/B test:        Subject lines A vs B — measure open rate
+                 Subject A ("June is the month I think of you") will
+                 likely perform better with loyal clients.
+                 Subject B ("The light in the atelier has changed")
+                 will likely draw in cooler leads through curiosity.
+
+Preview:         Send a test to Kristof first. Read it aloud.
+                 If it sounds like a person, it is ready.
+                 If it sounds like a brand, rewrite it.
