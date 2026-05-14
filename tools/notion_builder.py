@@ -22,7 +22,7 @@ if not TOKEN:
 API = "https://api.notion.com/v1"
 H = {
     "Authorization": f"Bearer {TOKEN}",
-    "Notion-Version": "2025-09-03",
+    "Notion-Version": "2022-06-28",
     "Content-Type": "application/json",
 }
 
@@ -597,20 +597,36 @@ def templates_blocks():
 def build():
     print("\n🌿 Maison BU — Notion Marketing OS Builder\n")
 
-    # 1. Root page — probeer workspace, dan bestaande pagina als terugval
+    # 1. Root page
     print("Aanmaken: Home pagina...")
+
+    # Probeer eerst op workspace-niveau
     root = page(None, "🏠 Maison BU — Marketing OS", workspace=True)
+
+    # Terugval 1: zoek een bestaande pagina als parent
     if not root:
-        print("  ↳ Workspace-level mislukt, zoek bestaande pagina als parent...")
+        print("  ↳ Workspace-level mislukt — zoek bestaande pagina...")
         parent_id = sys.argv[1] if len(sys.argv) > 1 else search_any_page()
         if parent_id:
-            print(f"  ↳ Gevonden parent: {parent_id}")
+            print(f"  ↳ Parent gevonden: {parent_id}")
             root = page(parent_id, "🏠 Maison BU — Marketing OS")
-        if not root:
-            print("\n❌ Kon geen pagina aanmaken.")
-            print("   Zorg dat de Notion-integratie toegang heeft tot minstens één pagina:")
-            print("   Open een pagina in Notion → ··· → Connections → voeg de integratie toe.")
-            sys.exit(1)
+
+    # Terugval 2: maak een blanco root-pagina zonder parent-vereiste
+    if not root:
+        print("  ↳ Probeer zonder icon/emoji als laatste poging...")
+        root = call("POST", "pages", {
+            "parent": {"type": "workspace", "workspace": True},
+            "properties": {"title": {"title": [{"text": {"content": "Maison BU Marketing OS"}}]}}
+        })
+        if root:
+            print(f"  ✓  Maison BU Marketing OS")
+
+    if not root:
+        print("\n❌ Kon geen pagina aanmaken.")
+        print("   Zorg in Notion dat de integratie 'Capabilities' heeft:")
+        print("   notion.so/my-integrations → jouw integratie → Capabilities")
+        print("   Vink aan: Read content ✓  Insert content ✓  Update content ✓")
+        sys.exit(1)
 
     root_id = root["id"]
     print(f"\n   Root pagina ID: {root_id}")
