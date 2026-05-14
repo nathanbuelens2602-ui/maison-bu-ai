@@ -68,6 +68,13 @@ def database(parent_id, title, props):
     return res
 
 
+def search_any_page():
+    res = call("POST", "search", {"filter": {"property": "object", "value": "page"}, "page_size": 1})
+    if res and res.get("results"):
+        return res["results"][0]["id"]
+    return None
+
+
 # ─── block helpers ───────────────────────────────────────────────────────────
 
 def h1(t):
@@ -590,21 +597,19 @@ def templates_blocks():
 def build():
     print("\n🌿 Maison BU — Notion Marketing OS Builder\n")
 
-    # 1. Root page
+    # 1. Root page — probeer workspace, dan bestaande pagina als terugval
     print("Aanmaken: Home pagina...")
     root = page(None, "🏠 Maison BU — Marketing OS", workspace=True)
     if not root:
-        print("\n⚠  Workspace-level aanmaken mislukt. Probeer dit:")
-        print("   1. Ga naar een pagina in Notion die je wilt gebruiken als root")
-        print("   2. Klik rechts → Share → voeg de integratie toe")
-        print("   3. Kopieer de pagina-ID uit de URL")
-        print("   4. Herstart dit script met: python tools/notion_builder.py <PAGE_ID>")
-        if len(sys.argv) > 1:
-            parent_id = sys.argv[1]
-            print(f"\n   Probeer met opgegeven pagina ID: {parent_id}")
+        print("  ↳ Workspace-level mislukt, zoek bestaande pagina als parent...")
+        parent_id = sys.argv[1] if len(sys.argv) > 1 else search_any_page()
+        if parent_id:
+            print(f"  ↳ Gevonden parent: {parent_id}")
             root = page(parent_id, "🏠 Maison BU — Marketing OS")
         if not root:
-            print("\n❌ Kon geen root pagina aanmaken. Zie instructies hierboven.")
+            print("\n❌ Kon geen pagina aanmaken.")
+            print("   Zorg dat de Notion-integratie toegang heeft tot minstens één pagina:")
+            print("   Open een pagina in Notion → ··· → Connections → voeg de integratie toe.")
             sys.exit(1)
 
     root_id = root["id"]
