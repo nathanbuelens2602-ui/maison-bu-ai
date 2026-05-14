@@ -21,20 +21,22 @@ def call(method, path, body=None):
         return None
     return r.json()
 
-def find_page(title):
+def find_pages(title):
+    """Geeft alle pagina-IDs terug die de zoekterm bevatten (duplicaten inbegrepen)."""
     res = call("POST", "search", {
         "query": title,
         "filter": {"property": "object", "value": "page"}
     })
     if not res:
-        return None
+        return []
+    ids = []
     for p in res.get("results", []):
         props = p.get("properties", {})
         t = props.get("title", {}).get("title", [])
         name = t[0]["plain_text"] if t else ""
         if title.lower() in name.lower():
-            return p["id"]
-    return None
+            ids.append(p["id"])
+    return ids
 
 def add_blocks(page_id, blocks):
     for i in range(0, len(blocks), 95):
@@ -350,10 +352,12 @@ if __name__ == "__main__":
     print("\n🌿 Inhoud toevoegen aan Maison BU Marketing OS pagina's\n")
     ok = 0
     for title, blocks in PAGES.items():
-        page_id = find_page(title)
-        if page_id:
-            add_blocks(page_id, blocks)
-            print(f"  ✓  {title}")
+        page_ids = find_pages(title)
+        if page_ids:
+            for pid in page_ids:
+                add_blocks(pid, blocks)
+            label = f"({len(page_ids)}x)" if len(page_ids) > 1 else ""
+            print(f"  ✓  {title} {label}")
             ok += 1
         else:
             print(f"  ⚠  Niet gevonden: {title}")
