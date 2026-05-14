@@ -6,6 +6,7 @@ from datetime import datetime
 from .base_agent import BaseAgent
 from prompts.system_prompts import LAST_MINUTE_BOOKING_SYSTEM
 from config.settings import STUDIO
+from config.brand_voice import APPROVED_BOOKING_PHRASES, SALES_PHILOSOPHY
 
 
 class LastMinuteBookingAgent(BaseAgent):
@@ -28,7 +29,8 @@ class LastMinuteBookingAgent(BaseAgent):
         )
         service_str = service or "a signature treatment"
         therapist_str = f"with {therapist}" if therapist else "with one of our artisans"
-        context_str = special_context or "a rare opening in the schedule"
+        context_str = special_context or "a rare opening in the atelier"
+        approved_str = "\n".join(f"  — {p}" for p in APPROVED_BOOKING_PHRASES)
 
         prompt = f"""
 Generate all last-minute booking content for Maison BU.
@@ -42,28 +44,40 @@ CONTEXT: {context_str}
 BOOKING URL: {STUDIO["booking_url"]}
 INSTAGRAM: {STUDIO["instagram"]}
 
-Produce all four formats:
+APPROVED BOOKING LANGUAGE (use these as anchors):
+{approved_str}
+
+NEVER USE: "last minute", "hurry", "don't wait", "act now", "cancellation available",
+"still spots left", "book now before it's gone", countdown language, promotional energy.
+
+Frame every slot as: a window has opened — and you are being personally invited.
+Not as: we have a gap and need to fill it.
+
+The guest receiving this should feel quietly chosen. Not mass-messaged.
+
+DELIVERABLE FORMAT:
 
 ### 1. INSTAGRAM STORY TEXT
-2–3 lines. Clean. No emojis. Feeling of quiet privilege.
-Frame it as an opening, never a cancellation.
+2–3 lines. Clean. No emojis. Quiet privilege. As if typed by hand.
 
 ### 2. INSTAGRAM FEED CAPTION
-Short. Elegant. A brief window into the moment. 4–6 lines.
+4–6 lines. Atmospheric, brief, elegant. Booking URL on the final line.
 
 ### 3. SMS / WHATSAPP MESSAGE
-Max 160 characters including the booking link. Personal, warm, direct.
+Max 160 characters including booking link. Warm, personal, direct.
+Feels like it was sent by a person who thought of you specifically.
 
 ### 4. EMAIL
-Subject line (max 45 chars) + 4-line body. No more.
+Subject line (max 45 chars) + 4-line body. Nothing more.
 The reader should feel they are the only person receiving this.
 
 ### 5. STORY VISUAL DIRECTION
-What image or video to pair with the Story text.
-(e.g. "Slow pan across the empty treatment chair in warm afternoon light")
+One sentence describing the exact image or video to pair with the Story.
+Must feel cinematic and brand-aligned.
+(e.g., "The empty treatment chair in warm late-afternoon light, slightly out of focus.")
 
-Tone throughout: a friend who runs the most beautiful studio in Hasselt
-has a rare window — and thought of you.
+Tone: a close friend who runs the most refined studio in Hasselt
+just thought of you. That is the entirety of the energy.
 """
         result = self._call(LAST_MINUTE_BOOKING_SYSTEM, prompt)
         output = self._header(f"Last Minute — {service_str}") + result

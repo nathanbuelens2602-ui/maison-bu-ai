@@ -6,6 +6,7 @@ import os
 import anthropic
 from datetime import datetime
 from config.settings import ANTHROPIC_API_KEY, PRIMARY_MODEL, FAST_MODEL, MAX_TOKENS, OUTPUTS
+from config.brand_voice import CORE_MANTRAS, PRIME_DIRECTIVE
 
 
 class BaseAgent:
@@ -37,3 +38,7 @@ class BaseAgent:
     def _header(self, title: str) -> str:
         line = "─" * 60
         return f"\n{line}\n  MAISON BU — {title.upper()}\n{line}\n"
+
+    def _soul_test_reminder(self) -> str:
+        """Returns the prime directive as a closing reminder in prompts."""
+        return f"\n\nREMEMBER — THE PRIME DIRECTIVE:\n{PRIME_DIRECTIVE.strip()}"

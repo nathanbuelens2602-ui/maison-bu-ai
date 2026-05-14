@@ -4,7 +4,7 @@ Crafts Instagram and social media captions for every content type.
 """
 from .base_agent import BaseAgent
 from prompts.system_prompts import CAPTION_WRITING_SYSTEM
-from config.brand_voice import CONTENT_PILLARS
+from config.brand_voice import CONTENT_PILLARS, GUEST_JOURNEY, APPROVED_BOOKING_PHRASES
 
 
 class CaptionWritingAgent(BaseAgent):
@@ -28,6 +28,7 @@ class CaptionWritingAgent(BaseAgent):
         }
         cta = cta_map.get(cta_type, cta_map["booking"]) if include_cta else ""
 
+        approved_phrases = "\n".join(f"  — {p}" for p in APPROVED_BOOKING_PHRASES[:4])
         prompt = f"""
 Write an Instagram caption for Maison BU.
 
@@ -35,15 +36,30 @@ CONTENT PILLAR: {content_pillar}
 SUBJECT / MOMENT: {subject}
 VISUAL IN THE POST: {visual_description}
 SERVICE FEATURED: {service or "No specific service — brand moment"}
-CALL TO ACTION: {cta or "None required"}
+CALL TO ACTION: {cta or "None required — close with reflection or atmosphere"}
 
-Deliver:
-1. MAIN CAPTION (max 150 words, follows the brand caption architecture)
-2. ALTERNATIVE HOOK (just the first line, a different angle)
-3. HASHTAG SET (8 tags, curated and relevant)
+APPROVED BOOKING PHRASES (if CTA needed):
+{approved_phrases}
 
-Do not number these sections in your output — present them cleanly separated
-by a line break. The caption should feel handwritten, not generated.
+CAPTION ARCHITECTURE:
+Line 1: A sensory or emotional hook. Pure feeling. Not context, not information.
+Lines 2–4: The scene unfolds. Intimate, specific, inside the moment.
+Line 5: A quiet close — reflection, truth or gentle invitation.
+
+DELIVER:
+MAIN CAPTION (max 150 words — follow the architecture above)
+
+ALTERNATIVE HOOK
+A different opening line — different angle, same world.
+
+HASHTAG SET
+8 curated tags. Niche and specific first. No generic beauty spam.
+
+Present cleanly with no section labels or numbering.
+Separated only by a single line break.
+
+The caption must feel written by a person who genuinely cares — not generated.
+If it could belong to any other salon in the world, rewrite it.
 """
         result = self._call(CAPTION_WRITING_SYSTEM, prompt)
         output = self._header(f"Caption — {subject}") + result
@@ -67,23 +83,33 @@ by a line break. The caption should feel handwritten, not generated.
         after_description: str,
         client_feeling: str | None = None,
     ) -> str:
-        feeling = client_feeling or "a quiet, radiant confidence"
+        feeling = client_feeling or "a quiet, radiant confidence — more herself than when she arrived"
         prompt = f"""
-Write a before/after transformation caption for Maison BU.
+Write a transformation caption for Maison BU.
 
 Service performed: {service}
 Before state: {before_description}
 After state: {after_description}
-How the client felt leaving: {feeling}
+How the guest felt leaving: {feeling}
 
-The caption should NOT describe the visual (the image speaks). Instead, it should
-capture the emotional journey — the decision to transform, the ritual itself,
-the feeling of leaving. Never use the word "transformation" or "makeover."
+CRITICAL RULES FOR THIS CAPTION:
+— Do NOT describe what the image shows — the visual speaks; the words feel
+— Do NOT use the words "transformation," "makeover," "glow up" or "new you"
+— Write about the emotional journey: the decision, the ritual, the feeling of leaving
+— The result should sound effortless and deeply personal — never triumphant
+— The guest "carries a feeling" when they leave, not just a look
+— Beauty = refinement of identity. Bringing someone closer to who they truly are.
 
-Deliver:
-1. MAIN CAPTION (max 120 words)
-2. STORY VERSION (shorter, 2–3 lines for Stories)
-3. HASHTAG SET (6 tags)
+MAIN CAPTION (max 120 words)
+The emotional arc — before, during and after — told through feeling, not description.
+
+STORY VERSION
+2–3 lines only. For Instagram Stories. Intimate, immediate.
+
+HASHTAG SET
+6 curated, specific tags.
+
+Separated cleanly — no labels or numbering.
 """
         result = self._call(CAPTION_WRITING_SYSTEM, prompt)
         output = self._header(f"Transformation Caption — {service}") + result

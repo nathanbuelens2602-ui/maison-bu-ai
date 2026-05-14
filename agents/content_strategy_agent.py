@@ -4,7 +4,7 @@ Generates monthly content calendars, campaign themes, and pillar breakdowns.
 """
 from .base_agent import BaseAgent
 from prompts.system_prompts import CONTENT_STRATEGY_SYSTEM
-from config.brand_voice import CONTENT_PILLARS, SEASONAL_THEMES, SERVICES
+from config.brand_voice import CONTENT_PILLARS, SEASONAL_THEMES, SERVICES, GUEST_PROFILE, CORE_MANTRAS, BRAND_MANIFESTO
 
 
 class ContentStrategyAgent(BaseAgent):
@@ -23,37 +23,67 @@ class ContentStrategyAgent(BaseAgent):
         theme_str = campaign_theme or "no specific campaign — brand world building"
 
         season = self._get_season(month)
-        seasonal_note = SEASONAL_THEMES.get(season, "")
+        seasonal_data = SEASONAL_THEMES.get(season, {})
+        seasonal_emotion = seasonal_data.get("emotion", "")
+        seasonal_services = ", ".join(seasonal_data.get("hero_services", []))
+        seasonal_moments = ", ".join(seasonal_data.get("cultural_moments", []))
+        seasonal_theme = seasonal_data.get("content_theme", "")
+        seasonal_palette = seasonal_data.get("visual_palette", "")
 
         pillars_str = "\n".join(
-            f"  • {p['name']}: {p['description']}" for p in CONTENT_PILLARS
+            f"  • {p['name']} ({p['posting_weight']}): {p['description']}\n"
+            f"    Emotion: {p['emotion']} | Copy: {p['copy_tone']}"
+            for p in CONTENT_PILLARS
         )
 
         prompt = f"""
 Create a complete content calendar for Maison BU for {month} {year}.
 
 BRIEF:
-— Season: {season.title()} — "{seasonal_note}"
+— Season: {season.title()}
+— Seasonal emotion: "{seasonal_emotion}"
+— Seasonal content theme: "{seasonal_theme}"
+— Visual palette this season: {seasonal_palette}
 — Campaign theme: {theme_str}
 — Focus services this month: {services_str}
-— Posting frequency: {posts_per_week} posts per week (across feed + reels)
+— Season's hero services: {seasonal_services}
+— Cultural moments to consider: {seasonal_moments}
+— Posting frequency: {posts_per_week} posts per week (feed posts + reels)
 — Platforms: Instagram (primary), TikTok (secondary)
+
+THE GUEST THIS CONTENT SERVES:
+Someone who moves through a fast, demanding world. They are tired of transactional
+experiences. They want to feel seen, slowed down, elevated. They buy peace,
+confidence, attention, discretion. Beauty = refinement of identity.
 
 CONTENT PILLARS TO ROTATE THROUGH:
 {pillars_str}
 
 DELIVERABLE FORMAT:
-For each week, provide:
-  WEEK [N] — [Theme Title]
-  Day | Content Pillar | Format | Visual Direction | Copy Direction | CTA
 
-Then provide:
-  MONTHLY THEME OVERVIEW (2–3 sentences on the overarching narrative arc)
-  KEY DATES & MOMENTS to leverage this month
-  3 × CAPTION HOOKS (opening lines ready to develop)
-  HASHTAG BANK (15–20 tags, ranked by priority)
+## MONTHLY NARRATIVE ARC
+2–3 sentences. The emotional story the month tells across all content.
+A guest who follows for the whole month should feel a complete emotional journey.
 
-Make every entry specific, actionable, and unmistakably Maison BU.
+## KEY DATES & CULTURAL MOMENTS
+What to leverage and how — aligned with Maison BU's world, not generic holidays.
+
+## WEEK-BY-WEEK CALENDAR
+For each week:
+  WEEK [N] — [Week Theme]
+  [Day] | [Pillar] | [Format: Feed / Reel / Story / Carousel] | [Visual Direction] | [Copy Direction] | [CTA if any]
+
+Visual Direction should be specific: lighting, subject, framing, texture.
+Copy Direction should include the opening line or emotional anchor.
+
+## 3 × CAPTION HOOKS
+Opening lines — one per key piece. Sensory, emotional, unmistakably Maison BU.
+
+## HASHTAG BANK
+15–20 curated tags, ranked: niche and owned first, broader second.
+
+Every entry must be specific and actionable. Generic = failure.
+{self._soul_test_reminder()}
 """
 
         result = self._call(CONTENT_STRATEGY_SYSTEM, prompt)
@@ -68,13 +98,21 @@ Write a definitive Content Pillars Brief for Maison BU's social media presence.
 
 For each of the five pillars (The Ritual, The Transformation, The Maison,
 The Edit, L'Invitation), provide:
-— Pillar definition (what it is, why it matters to the brand)
-— Visual language guide (lighting, subject, composition, colour palette)
-— Copy voice for this pillar (how the tone shifts subtly within the brand voice)
-— 5 content ideas with format suggestions
-— What this pillar builds in the audience (trust / desire / loyalty / urgency)
+— Pillar definition (what it is, why it matters to the Maison BU world)
+— The guest this pillar speaks to and what it gives them emotionally
+— Visual language guide: lighting, subject, composition, texture, camera approach
+— Copy voice: how the tone shifts subtly within the brand voice for this pillar
+— 5 specific content ideas with format suggestions and opening line
+— What this pillar builds over time: trust / desire / belonging / anticipation
 
-End with a recommended monthly posting ratio across all five pillars.
+End with:
+— Recommended monthly posting ratio across all five pillars
+— A note on how the pillars work together as an emotional system —
+  not isolated posts but chapters in an ongoing story
+
+This brief is the creative bible for the Maison BU content team.
+Every entry must be specific enough to hand to a photographer or copywriter
+and have them immediately understand the world they are working within.
 """
         result = self._call(CONTENT_STRATEGY_SYSTEM, prompt)
         output = self._header("Content Pillars Brief") + result

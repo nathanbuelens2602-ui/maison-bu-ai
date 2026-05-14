@@ -4,7 +4,7 @@ Writes email campaigns that feel like personal letters from the atelier.
 """
 from .base_agent import BaseAgent
 from prompts.system_prompts import MAIL_MARKETING_SYSTEM
-from config.brand_voice import EMAIL_SIGNATURE
+from config.brand_voice import EMAIL_SIGNATURE, GUEST_PROFILE, PRICING_PHILOSOPHY, LOYALTY_PHILOSOPHY
 from config.settings import STUDIO
 
 
@@ -32,28 +32,37 @@ SERVICE / OFFER FEATURED: {service_or_offer or "Brand storytelling — no specif
 SEASON / CONTEXT: {season or "Evergreen"}
 AUDIENCE SEGMENT: {segment}
 BOOKING URL: {STUDIO["booking_url"]}
+FOUNDER: Kristof
+
+THE GUEST RECEIVING THIS EMAIL:
+Someone who carries a demanding, stimulating life. They are tired of transactional
+experiences. They found Maison BU because they sensed something different.
+They should feel: personally chosen, quietly privileged, seen — never sold to.
 
 DELIVERABLES:
 
 ### SUBJECT LINE OPTIONS (3 variations)
 Each max 50 characters. From most personal to most evocative.
+As if sent by a person — Kristof, or a trusted atelier voice — not a brand.
 
 ### PREVIEW TEXT
-Completes the subject line. Max 90 characters. 3 variations.
+3 variations. Completes the subject line's thought. Max 90 chars.
+Not a summary — a continuation.
 
 ### EMAIL BODY
-Write the full email in clean prose. Structure:
-  — Salutation (personal, not "Dear subscriber")
-  — Opening paragraph (sensory, emotional, draws them in)
-  — Body (2 short paragraphs max — the story, the invitation)
-  — Single CTA button text (5–7 words)
-  — Sign-off
+Full email in clean prose. Structure:
+  — Salutation: personal, as if to a specific person, never "Dear subscriber"
+  — Opening: sensory, atmospheric, pulls them into a world — not into information
+  — Body (2 short paragraphs max): the story, then the gentle invitation
+  — Single CTA button (5–7 words, calm and beautiful)
+  — Sign-off: warm, from Kristof & the Maison BU Atelier
 
 {"### HTML VERSION" if include_html else ""}
-{"Provide a clean, minimal single-column HTML version with inline styles." if include_html else ""}
+{"Clean, minimal single-column HTML with inline styles. Warm off-white background (#F8F5F0). No decoration beyond typography." if include_html else ""}
 
 The email should feel like finding a handwritten note under your door from
-the most beautiful studio in Hasselt.
+someone who genuinely thought of you. Not a campaign. Not a newsletter.
+A personal letter from the most considered studio in Hasselt.
 """
         result = self._call(MAIL_MARKETING_SYSTEM, prompt)
         output = self._header(f"Email Campaign — {campaign_name}") + result
@@ -125,17 +134,26 @@ Write a client loyalty email for Maison BU.
 
 Milestone: {milestone}
 Client name variable: {client_name_placeholder}
+Booking URL: {STUDIO["booking_url"]}
 
-This email celebrates the client's relationship with Maison BU. It is not
-a discount email. It is an acknowledgement of a shared ritual — the kind
-of loyalty that cannot be bought, only felt.
+LOYALTY PHILOSOPHY:
+Maison BU sees loyalty as emotional, not transactional. Loyal guests feel
+understood — not rewarded. They are part of an inner circle not through
+visible status systems, but through familiarity, recognition and emotional
+consistency. The goal: they feel known, trusted, welcomed, important, at ease.
 
-Deliverables:
-1. Subject line (personal, never salesy)
-2. Preview text
-3. Full email body
-4. Optional: a single, exclusive privilege to offer (not a discount — think
-   priority booking, a complimentary ritual, a curated recommendation)
+This email is NOT a discount email. It is not a points email.
+It is an acknowledgement of a shared ritual — the kind of loyalty that
+cannot be bought, only felt. The guest should feel genuinely seen.
+
+The deepest loyalty response: "I didn't know places like this still existed."
+
+DELIVERABLES:
+Subject line (personal — as if Kristof sent it specifically for this person)
+Preview text
+Full email body (intimate, personal, celebratory without being promotional)
+Optional exclusive: not a discount — a priority booking window, a
+  complimentary headspa ritual, an early invitation to a gallery night
 """
         result = self._call(MAIL_MARKETING_SYSTEM, prompt)
         output = self._header(f"Loyalty Email — {milestone}") + result
