@@ -597,40 +597,25 @@ def templates_blocks():
 def build():
     print("\n🌿 Maison BU — Notion Marketing OS Builder\n")
 
-    # 1. Root page
-    print("Aanmaken: Home pagina...")
+    # 1. Root page — gebruik bestaande pagina of maak nieuwe aan
+    print("Root pagina ophalen...")
+    root_id = None
 
-    # Probeer eerst op workspace-niveau
-    root = page(None, "🏠 Maison BU — Marketing OS", workspace=True)
+    # Als een pagina-ID meegegeven is als argument, gebruik die direct als root
+    if len(sys.argv) > 1 and sys.argv[1].strip():
+        root_id = sys.argv[1].strip()
+        print(f"  ✓  Root pagina: {root_id}")
+    else:
+        # Zoek bestaande Maison BU pagina
+        res = call("POST", "search", {"query": "Maison BU Marketing OS", "filter": {"property": "object", "value": "page"}})
+        if res and res.get("results"):
+            root_id = res["results"][0]["id"]
+            print(f"  ✓  Bestaande pagina gevonden: {root_id}")
+        else:
+            print("❌ Geen root pagina gevonden. Voer de workflow opnieuw uit.")
+            sys.exit(1)
 
-    # Terugval 1: zoek een bestaande pagina als parent
-    if not root:
-        print("  ↳ Workspace-level mislukt — zoek bestaande pagina...")
-        parent_id = sys.argv[1] if len(sys.argv) > 1 else search_any_page()
-        if parent_id:
-            print(f"  ↳ Parent gevonden: {parent_id}")
-            root = page(parent_id, "🏠 Maison BU — Marketing OS")
-
-    # Terugval 2: maak een blanco root-pagina zonder parent-vereiste
-    if not root:
-        print("  ↳ Probeer zonder icon/emoji als laatste poging...")
-        root = call("POST", "pages", {
-            "parent": {"type": "workspace", "workspace": True},
-            "properties": {"title": {"title": [{"text": {"content": "Maison BU Marketing OS"}}]}}
-        })
-        if root:
-            print(f"  ✓  Maison BU Marketing OS")
-
-    if not root:
-        print("\n❌ Kon geen pagina aanmaken.")
-        print("   Zorg in Notion dat de integratie 'Capabilities' heeft:")
-        print("   notion.so/my-integrations → jouw integratie → Capabilities")
-        print("   Vink aan: Read content ✓  Insert content ✓  Update content ✓")
-        sys.exit(1)
-
-    root_id = root["id"]
-    print(f"\n   Root pagina ID: {root_id}")
-    print(f"   Root URL: https://notion.so/{root_id.replace('-', '')}\n")
+    print(f"\n   Root URL: https://notion.so/{root_id.replace('-', '')}\n")
 
     # 2. Content Database
     print("Aanmaken: Content Database...")
