@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+outputs/content_calendar/*.txt
+outputs/captions/*.txt
+outputs/reel_scripts/*.txt
+outputs/emails/*.txt
+outputs/last_minute/*.txt
