@@ -12,17 +12,11 @@ Usage:
   python main.py onboarding     Generate client onboarding emails
   python main.py brandkit       Generate Brand World Kit
   python main.py demo           Run a demo of all agents
+  python main.py pdf            Export campaign files to PDF
 """
 import sys
 import argparse
-from orchestrator import MaisonBUOrchestrator
-from agents import (
-    ContentStrategyAgent,
-    CaptionWritingAgent,
-    ReelScriptAgent,
-    MailMarketingAgent,
-    LastMinuteBookingAgent,
-)
+from pathlib import Path
 
 
 BANNER = """
@@ -36,6 +30,7 @@ BANNER = """
 
 
 def run_campaign(args):
+    from orchestrator import MaisonBUOrchestrator
     o = MaisonBUOrchestrator()
     o.run_monthly_campaign(
         month=args.month or _prompt("Month (e.g. June)"),
@@ -47,6 +42,7 @@ def run_campaign(args):
 
 
 def run_caption(args):
+    from agents import CaptionWritingAgent
     agent = CaptionWritingAgent()
     agent.write_caption(
         content_pillar=args.pillar or _prompt("Content pillar (The Ritual / The Transformation / The Maison / The Edit / L'Invitation)"),
@@ -58,6 +54,7 @@ def run_caption(args):
 
 
 def run_reel(args):
+    from agents import ReelScriptAgent
     agent = ReelScriptAgent()
     reel_types = ["ritual", "transformation", "day_in_the_life", "technique", "seasonal", "invitation", "team"]
     agent.write_reel_script(
@@ -69,6 +66,7 @@ def run_reel(args):
 
 
 def run_email(args):
+    from agents import MailMarketingAgent
     agent = MailMarketingAgent()
     email_type = args.type or _prompt("Email type (campaign / newsletter / welcome / loyalty / reengagement)")
     if email_type == "welcome":
@@ -93,22 +91,57 @@ def run_email(args):
 
 
 def run_last_minute(args):
+    from orchestrator import MaisonBUOrchestrator
     o = MaisonBUOrchestrator()
     o.run_last_minute_protocol()
 
 
 def run_onboarding(args):
+    from orchestrator import MaisonBUOrchestrator
     o = MaisonBUOrchestrator()
     o.run_onboarding_sequence()
 
 
 def run_brand_kit(args):
+    from orchestrator import MaisonBUOrchestrator
     o = MaisonBUOrchestrator()
     o.run_brand_world_kit()
 
 
+def run_pdf(args):
+    from tools.pdf_export import MaisonBUPdfExporter
+    exporter = MaisonBUPdfExporter()
+
+    if args.file:
+        p = Path(args.file)
+        if not p.is_absolute():
+            p = Path(__file__).parent / "outputs" / args.file
+        out = exporter.export_file(p)
+        print(f"  [OK] PDF aangemaakt: {out}")
+    elif args.campaign:
+        results = exporter.export_campaign(args.campaign)
+        if results:
+            for r in results:
+                print(f"  [OK] {r.name}")
+            print(f"\n  {len(results)} PDF('s) opgeslagen in: outputs/pdf/")
+        else:
+            print(f"  Geen bestanden gevonden voor campagne '{args.campaign}'.")
+    else:
+        results = exporter.export_all()
+        if results:
+            for r in results:
+                print(f"  [OK] {r.name}")
+            print(f"\n  {len(results)} PDF('s) opgeslagen in: outputs/pdf/")
+        else:
+            print("  Geen .txt bestanden gevonden in outputs/.")
+
+
 def run_demo(args):
     """Quick demo — generates one output per agent without prompts."""
+    from agents import (
+        ContentStrategyAgent, CaptionWritingAgent,
+        ReelScriptAgent, MailMarketingAgent, LastMinuteBookingAgent,
+    )
     print(BANNER)
     print("  Running demo — generating sample outputs for all five agents.\n")
 
@@ -235,6 +268,17 @@ def main():
     # demo
     subparsers.add_parser("demo", help="Run a demo of all agents")
 
+    # pdf
+    p_pdf = subparsers.add_parser("pdf", help="Exporteer campagnebestanden naar PDF")
+    p_pdf.add_argument(
+        "--file",
+        help="Specifiek bestand (bijv. reel_scripts/juni_2026_acht_reels.txt)",
+    )
+    p_pdf.add_argument(
+        "--campaign",
+        help="Filter op campagnenaam (bijv. juni_2026)",
+    )
+
     args = parser.parse_args()
 
     commands = {
@@ -246,6 +290,7 @@ def main():
         "onboarding": run_onboarding,
         "brandkit": run_brand_kit,
         "demo": run_demo,
+        "pdf": run_pdf,
     }
 
     if args.command in commands:
