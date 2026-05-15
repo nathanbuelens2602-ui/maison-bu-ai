@@ -4,7 +4,7 @@ Vult alle Maison BU Marketing OS sub-pagina's met de volledige geplande inhoud.
 Cross-references worden als klikbare Notion-mentions toegevoegd.
 Wist eerst bestaande blokken zodat duplicaten worden opgelost.
 """
-import os, time, requests
+import os, sys, time, traceback, requests
 
 TOKEN = os.getenv("NOTION_TOKEN")
 API = "https://api.notion.com/v1"
@@ -15,14 +15,18 @@ H = {
 }
 
 def call(method, path, body=None):
-    r = requests.request(method, f"{API}/{path}", headers=H, json=body)
-    time.sleep(0.35)
-    if r.status_code not in (200, 201, 204):
-        print(f"  ⚠  {r.status_code}: {r.text[:200]}")
+    try:
+        r = requests.request(method, f"{API}/{path}", headers=H, json=body, timeout=30)
+        time.sleep(0.35)
+        if r.status_code not in (200, 201, 204):
+            print(f"  ⚠  {r.status_code}: {r.text[:300]}")
+            return None
+        if r.status_code == 204:
+            return {}
+        return r.json()
+    except Exception as e:
+        print(f"  ⚠  Verbindingsfout: {e}")
         return None
-    if r.status_code == 204:
-        return {}
-    return r.json()
 
 def find_pages(title):
     res = call("POST", "search", {"query": title, "filter": {"property": "object", "value": "page"}})
@@ -70,18 +74,27 @@ def create_child_page(parent_id, title):
 # ── Block helpers ─────────────────────────────────────────────────────────────
 
 def _rt(text):
-    return {"type": "text", "text": {"content": text}}
+    return {"type": "text", "text": {"content": str(text)}}
 
-def _mention(page_id):
-    return {"type": "mention", "mention": {"type": "page", "page": {"id": page_id}}}
-
-def p(*parts):
-    """Paragraaf. Parts: strings of page_id-dicts van mention()."""
-    rich = [_mention(x["id"]) if isinstance(x, dict) else _rt(x) for x in parts]
-    return {"object": "block", "type": "paragraph", "paragraph": {"rich_text": rich}}
+def _as_rt(x):
+    """Zet string of mention-dict om naar rich_text element."""
+    if isinstance(x, dict) and "id" in x:
+        if x.get("_db"):
+            return {"type": "mention", "mention": {"type": "database", "database": {"id": x["id"]}}}
+        return {"type": "mention", "mention": {"type": "page", "page": {"id": x["id"]}}}
+    return _rt(x)
 
 def mention(page_id):
-    return {"id": page_id}  # wordt herkend door p()
+    """Maak een pagina-mention dict. Gebruik dit direct in p(), li(), todo()."""
+    return {"id": page_id}
+
+def db_mention(db_id):
+    """Maak een database-mention dict."""
+    return {"id": db_id, "_db": True}
+
+def p(*parts):
+    return {"object": "block", "type": "paragraph",
+            "paragraph": {"rich_text": [_as_rt(x) for x in parts]}}
 
 def quote(t):
     return {"object": "block", "type": "quote",
@@ -96,13 +109,12 @@ def h3(t):
             "heading_3": {"rich_text": [_rt(t)]}}
 
 def li(*parts):
-    rich = [_mention(x["id"]) if isinstance(x, dict) else _rt(x) for x in parts]
     return {"object": "block", "type": "bulleted_list_item",
-            "bulleted_list_item": {"rich_text": rich}}
+            "bulleted_list_item": {"rich_text": [_as_rt(x) for x in parts]}}
 
-def todo(t):
+def todo(*parts):
     return {"object": "block", "type": "to_do",
-            "to_do": {"rich_text": [_rt(t)], "checked": False}}
+            "to_do": {"rich_text": [_as_rt(x) for x in parts], "checked": False}}
 
 def div():
     return {"object": "block", "type": "divider", "divider": {}}
@@ -128,19 +140,17 @@ def table(headers, rows, has_header=True):
         }
     }
 
-# ── Pagina-inhoud (met cross-references) ──────────────────────────────────────
+# ── Pagina-inhoud ─────────────────────────────────────────────────────────────
+# refs-dicts zijn al mention-ready: gebruik ze direct in p()/li()/todo()
+# NOOIT mention(refs[x]) schrijven — refs[x] IS al een mention-dict
 
 def build_pages(refs):
-    """
-    Bouwt alle pagina-inhoud met klikbare mentions naar andere pagina's.
-    refs = dict met paginanamen → Notion page/db ID
-    """
-    db  = refs.get("Content Database")
-    wf  = refs.get("Posting Workflow")
-    mb  = refs.get("Merkrichtlijnen")
-    ab  = refs.get("Asset Beheer")
-    sp  = refs.get("Shootdag Planner")
-    tpl = refs.get("Templates")
+    db  = db_mention(refs["Content Database"]) if refs.get("Content Database") else None
+    wf  = mention(refs["Posting Workflow"])    if refs.get("Posting Workflow")  else None
+    mb  = mention(refs["Merkrichtlijnen"])     if refs.get("Merkrichtlijnen")   else None
+    ab  = mention(refs["Asset Beheer"])        if refs.get("Asset Beheer")      else None
+    sp  = mention(refs["Shootdag Planner"])    if refs.get("Shootdag Planner")  else None
+    tpl = mention(refs["Templates"])           if refs.get("Templates")         else None
 
     return {
 
@@ -219,14 +229,12 @@ def build_pages(refs):
             div(),
             h2("De 6 stappen"),
             h3("Stap 1 — Idee 💡"),
-            li("Nieuw item aanmaken in ", mention(db) if db else "Content Database") if db
-                else li("Nieuw item aanmaken in Content Database"),
+            li("Nieuw item aanmaken in ", db) if db else li("Nieuw item aanmaken in Content Database"),
             li("Status: Idee"),
             li("Type, Pillar en Week invullen"),
             li("Kort concept noteren"),
             h3("Stap 2 — Aanmaken ✏️"),
-            li("Template openen (", mention(tpl) if tpl else "Templates", ")") if tpl
-                else li("Template openen (Reel / Feedpost / Story)"),
+            li("Template openen (", tpl, ")") if tpl else li("Template openen (Reel / Feedpost / Story)"),
             li("Caption schrijven"),
             li("Visueel beschrijven"),
             li("Status: In productie"),
@@ -242,8 +250,7 @@ def build_pages(refs):
                     ["Story",    "1080 × 1920px (9:16)", "JPG of MP4"],
                 ]
             ),
-            li("Asset link toevoegen aan ", mention(db) if db else "Content Database") if db
-                else li("Asset link toevoegen aan Content Database"),
+            li("Asset link toevoegen aan ", db) if db else li("Asset link toevoegen aan Content Database"),
             h3("Stap 4 — Goedkeuring 👀"),
             li("Status: Wacht op goedkeuring"),
             li("Kristof of teamlid controleert:"),
@@ -257,8 +264,7 @@ def build_pages(refs):
             li("Checklist afvinken"),
             h3("Stap 6 — Gepubliceerd 📣"),
             li("Status: Gepubliceerd"),
-            li("Datum bevestigd in ", mention(db) if db else "Content Database") if db
-                else li("Datum bevestigd in Content Database"),
+            li("Datum bevestigd in ", db) if db else li("Datum bevestigd in Content Database"),
             li("Engagement na 24u bekijken"),
             div(),
             h2("Status flow"),
@@ -345,10 +351,10 @@ def build_pages(refs):
             quote("Vraag jezelf vóór publicatie:\n\"Zou Kristof dit gezegd hebben?\"\n\nAls nee → herschrijf. Als ja → goedgekeurd."),
             div(),
             h2("Snelle links"),
-            li(mention(wf) if wf else "Posting Workflow")  if wf else li("→ Posting Workflow"),
-            li(mention(ab) if ab else "Asset Beheer")      if ab else li("→ Asset Beheer"),
-            li(mention(sp) if sp else "Shootdag Planner")  if sp else li("→ Shootdag Planner"),
-            li(mention(tpl) if tpl else "Templates")       if tpl else li("→ Templates"),
+            li(wf) if wf else li("→ Posting Workflow"),
+            li(ab) if ab else li("→ Asset Beheer"),
+            li(sp) if sp else li("→ Shootdag Planner"),
+            li(tpl) if tpl else li("→ Templates"),
             div(),
             h2("Contactgegevens"),
             table(
@@ -366,7 +372,7 @@ def build_pages(refs):
             h2("Maandelijkse lancering"),
             h3("Week 1 — Wereldopbouw"),
             todo("Strategie en kalender volledig ingevuld in Content Database"),
-            todo("Shootdag ingepland — zie "),
+            todo("Shootdag ingepland en voorbereid"),
             todo("Week 1 content aangemaakt (4 stuks)"),
             todo("Geen CTA's in Week 1 content — gecontroleerd"),
             todo("Muziek geselecteerd per reel"),
@@ -384,7 +390,7 @@ def build_pages(refs):
             todo("Sluitingsweek content aangemaakt"),
             todo("CTA op elk stuk (altijd als laatste regel)"),
             todo("Herboekings-e-mail verstuurd"),
-            todo("Alle content gepubliceerd ✓"),
+            todo("Alle content gepubliceerd"),
             div(),
             h2("Dagelijkse posting checklist"),
             h3("Voor het posten"),
@@ -462,8 +468,7 @@ def build_pages(refs):
                     ["De maison staat klaar",         "Reel",     "☐", ""],
                 ]
             ),
-            p("(Voeg rijen toe voor elke geplande content — zie ook ", mention(db) if db else "Content Database", ")")
-              if db else p("(Voeg rijen toe voor elke geplande content)"),
+            p("(Voeg rijen toe — zie ook ", db, ")") if db else p("(Voeg rijen toe voor elke geplande content)"),
             div(),
             h2("Naamconventie bestanden"),
             code(
@@ -475,10 +480,8 @@ def build_pages(refs):
             ),
             div(),
             h2("Workflow"),
-            li("Uploaden → ", mention(wf) if wf else "Posting Workflow") if wf
-                else li("Uploaden → zie Posting Workflow"),
-            li("Merkregels → ", mention(mb) if mb else "Merkrichtlijnen") if mb
-                else li("Merkregels → zie Merkrichtlijnen"),
+            li("Uploaden → ", wf) if wf else li("Uploaden → zie Posting Workflow"),
+            li("Merkregels → ", mb) if mb else li("Merkregels → zie Merkrichtlijnen"),
         ],
 
         "Shootdag Planner": [
@@ -521,8 +524,7 @@ def build_pages(refs):
             h2("Na de shoot"),
             todo("Bestanden overgezet naar Google Drive / Canva"),
             todo("Beste shots geselecteerd"),
-            todo("Asset links toegevoegd aan ", mention(db) if db else "Content Database") if db
-                else todo("Asset links toegevoegd aan Content Database"),
+            todo("Asset links toegevoegd aan ", db) if db else todo("Asset links toegevoegd aan Content Database"),
             todo("Status content bijgewerkt naar In productie"),
             div(),
             h2("Notities"),
@@ -538,23 +540,21 @@ def build_pages(refs):
             li("Klik rechtsboven op ··· → Duplicate"),
             li("Hernoem de kopie naar de titel van je content stuk"),
             li("Vul alle velden in"),
-            li("Voeg het item toe aan ", mention(db) if db else "Content Database") if db
-                else li("Voeg het item toe aan de Content Database"),
+            li("Voeg het item toe aan ", db) if db else li("Voeg het item toe aan de Content Database"),
             div(),
             h2("Beschikbare templates"),
             li("🎬 Reel Template — voor alle reels (30–60 sec)"),
             li("💬 Story Template — voor story flows (3–6 schermen)"),
             li("📷 Feedpost Template — voor feedposts (4:5 formaat)"),
             div(),
-            p("Workflow: ", mention(wf) if wf else "Posting Workflow",
-              "  |  Regels: ", mention(mb) if mb else "Merkrichtlijnen")
-              if wf and mb else p("Zie ook: Posting Workflow en Merkrichtlijnen"),
+            p("Workflow: ", wf, "  |  Regels: ", mb) if wf and mb
+                else p("Zie ook: Posting Workflow en Merkrichtlijnen"),
         ],
     }
 
 
 def build_reel_template(refs):
-    db  = refs.get("Content Database")
+    db = db_mention(refs["Content Database"]) if refs.get("Content Database") else None
     return [
         quote("Kopieer deze pagina voor elke nieuwe reel."),
         div(),
@@ -567,7 +567,7 @@ def build_reel_template(refs):
                 ["Publicatiedatum", ""],
                 ["Platform",        "Instagram Reel"],
                 ["Pillar",          "De Maison · De Craft · De Gast · Kristof · Ceremonie"],
-                ["Status",          "💡 Idee"],
+                ["Status",          "Idee"],
             ],
             has_header=False
         ),
@@ -605,20 +605,19 @@ def build_reel_template(refs):
         h2("Asset"),
         p("Link: (Canva / Drive link)"),
         div(),
-        h2("✅ Checklist voor publicatie"),
+        h2("Checklist voor publicatie"),
         todo("Caption nagelezen als Kristof — klinkt het menselijk?"),
         todo("Geen verboden woorden (luxury, deal, boek nu, enz.)"),
         todo("\"Atelier\" nergens → altijd \"de maison\""),
         todo("Muziek gelicentieerd"),
         todo("Ondertitels toegevoegd"),
-        todo("Status bijgewerkt in ", mention(db) if db else "Content Database") if db
-            else todo("Status bijgewerkt in Content Database"),
+        todo("Status bijgewerkt in ", db) if db else todo("Status bijgewerkt in Content Database"),
         todo("Gepubliceerd op juiste tijdstip"),
     ]
 
 
 def build_story_template(refs):
-    db = refs.get("Content Database")
+    db = db_mention(refs["Content Database"]) if refs.get("Content Database") else None
     return [
         quote("Kopieer deze pagina voor elke nieuwe story flow."),
         div(),
@@ -629,8 +628,8 @@ def build_story_template(refs):
                 ["Aantal schermen", "3 / 4 / 5 / 6"],
                 ["Week",            "Week 1 / 2 / 3 / 4"],
                 ["Publicatiedatum", ""],
-                ["Status",          "💡 Idee"],
-                ["Formaat",         "1080×1920px (9:16)"],
+                ["Status",          "Idee"],
+                ["Formaat",         "1080x1920px (9:16)"],
             ],
             has_header=False
         ),
@@ -663,19 +662,18 @@ def build_story_template(refs):
         todo("\"hello@maisonbu.be\""),
         todo("Swipe up / link in bio"),
         div(),
-        h2("✅ Checklist voor publicatie"),
+        h2("Checklist voor publicatie"),
         todo("Elk scherm minimaal 7 seconden"),
         todo("Overgang: zachte fade"),
         todo("Muziek aanwezig (50–60% volume)"),
         todo("\"Atelier\" nergens gebruikt"),
-        todo("Status bijgewerkt in ", mention(db) if db else "Content Database") if db
-            else todo("Status bijgewerkt in Content Database"),
+        todo("Status bijgewerkt in ", db) if db else todo("Status bijgewerkt in Content Database"),
         todo("Gepubliceerd op juiste tijdstip"),
     ]
 
 
 def build_feedpost_template(refs):
-    db = refs.get("Content Database")
+    db = db_mention(refs["Content Database"]) if refs.get("Content Database") else None
     return [
         quote("Kopieer deze pagina voor elke nieuwe feedpost."),
         div(),
@@ -686,8 +684,8 @@ def build_feedpost_template(refs):
                 ["Pillar",          "De Maison · De Craft · De Gast · Kristof · Ceremonie"],
                 ["Week",            "Week 1 / 2 / 3 / 4"],
                 ["Publicatiedatum", ""],
-                ["Status",          "💡 Idee"],
-                ["Aspect ratio",    "4:5 (1080×1350px)"],
+                ["Status",          "Idee"],
+                ["Aspect ratio",    "4:5 (1080x1350px)"],
             ],
             has_header=False
         ),
@@ -697,10 +695,10 @@ def build_feedpost_template(refs):
         p("Asset link: (Canva / Drive)"),
         div(),
         h2("Caption"),
-        p("(Begin met sfeer — minimaal 3 zinnen voor de CTA. Geen intro. Geen \"Hé!\". Gewoon beginnen.)"),
+        p("(Begin met sfeer — minimaal 3 zinnen voor de CTA. Geen intro. Geen \"He!\". Gewoon beginnen.)"),
         div(),
         h2("Hashtags"),
-        p("#MaisonBU  #Hasselt  (voeg 4–6 relevante hashtags toe)"),
+        p("#MaisonBU  #Hasselt  (voeg 4-6 relevante hashtags toe)"),
         div(),
         h2("CTA type"),
         todo("Geen (Week 1)"),
@@ -708,13 +706,12 @@ def build_feedpost_template(refs):
         todo("\"hello@maisonbu.be\" (Week 3 ceremonie)"),
         todo("\"maisonbu.be/book\" (Week 4)"),
         div(),
-        h2("✅ Checklist voor publicatie"),
+        h2("Checklist voor publicatie"),
         todo("Caption gelezen zonder beeld — voelt het nog iets?"),
         todo("Geen verboden woorden (luxury, premium, boek nu, sale, enz.)"),
         todo("\"Atelier\" nergens → altijd \"de maison\""),
-        todo("Asset klaar: 1080×1350px, JPG of PNG"),
-        todo("Status bijgewerkt in ", mention(db) if db else "Content Database") if db
-            else todo("Status bijgewerkt in Content Database"),
+        todo("Asset klaar: 1080x1350px, JPG of PNG"),
+        todo("Status bijgewerkt in ", db) if db else todo("Status bijgewerkt in Content Database"),
         todo("Gepubliceerd op juiste tijdstip"),
     ]
 
@@ -724,59 +721,78 @@ def build_feedpost_template(refs):
 if __name__ == "__main__":
     print("\n🌿 Maison BU Marketing OS — inhoud toevoegen\n")
 
-    # Verzamel alle page IDs voor cross-references
+    # Verzamel alle page IDs
     print("  Pagina ID's ophalen...")
     page_names = ["Vandaag", "Deze Week", "Posting Workflow", "Merkrichtlijnen",
                   "Checklists", "Asset Beheer", "Shootdag Planner", "Templates"]
     refs = {}
     for name in page_names:
-        ids = find_pages(name)
-        if ids:
-            refs[name] = ids[0]
-    db_id = find_db("Content Database")
-    if db_id:
-        refs["Content Database"] = db_id
-        print(f"  ✓ Content Database gevonden")
-    for name, pid in refs.items():
-        print(f"  ✓ {name}: {pid[:8]}...")
+        try:
+            ids = find_pages(name)
+            if ids:
+                refs[name] = ids[0]
+                print(f"  ✓ {name}")
+        except Exception as e:
+            print(f"  ⚠ Fout bij zoeken '{name}': {e}")
 
-    # Bouw pagina-inhoud met juiste cross-references
-    PAGES = build_pages(refs)
+    try:
+        db_id = find_db("Content Database")
+        if db_id:
+            refs["Content Database"] = db_id
+            print(f"  ✓ Content Database")
+    except Exception as e:
+        print(f"  ⚠ Fout bij zoeken Content Database: {e}")
+
+    # Bouw pagina-inhoud
+    try:
+        PAGES = build_pages(refs)
+    except Exception as e:
+        print(f"\n✗ Fout bij opbouwen pagina-inhoud:\n{traceback.format_exc()}")
+        sys.exit(1)
 
     # Vul alle sub-pagina's in
     print("\n  Inhoud toevoegen...\n")
     ok = 0
     for title, blocks in PAGES.items():
-        page_ids = find_pages(title)
-        if not page_ids:
-            print(f"  ⚠  Niet gevonden: {title}")
-            continue
-        label = f"({len(page_ids)}×)" if len(page_ids) > 1 else ""
-        for pid in page_ids:
-            clear_page(pid)
-            add_blocks(pid, blocks)
-        print(f"  ✓  {title} {label}")
-        ok += 1
+        try:
+            page_ids = find_pages(title)
+            if not page_ids:
+                print(f"  ⚠  Niet gevonden: {title}")
+                continue
+            label = f"({len(page_ids)}x)" if len(page_ids) > 1 else ""
+            for pid in page_ids:
+                clear_page(pid)
+                add_blocks(pid, blocks)
+            print(f"  ✓  {title} {label}")
+            ok += 1
+        except Exception as e:
+            print(f"  ✗  {title}: {traceback.format_exc()}")
 
-    print(f"\n  Standaard pagina's: {ok}/{len(PAGES)} bijgewerkt")
+    print(f"\n  Pagina's: {ok}/{len(PAGES)} bijgewerkt")
 
     # Template sub-pagina's aanmaken
     print("\n📝 Template sub-pagina's aanmaken...\n")
-    template_ids = find_pages("Templates")
-    if template_ids:
-        t_parent = template_ids[0]
-        for title, fn in [
-            ("🎬 Reel Template",     build_reel_template),
-            ("💬 Story Template",    build_story_template),
-            ("📷 Feedpost Template", build_feedpost_template),
-        ]:
-            child_id = create_child_page(t_parent, title)
-            if child_id:
-                add_blocks(child_id, fn(refs))
-                print(f"  ✓  {title}")
-            else:
-                print(f"  ⚠  Kon niet aanmaken: {title}")
-    else:
-        print("  ⚠  'Templates' pagina niet gevonden")
+    try:
+        template_ids = find_pages("Templates")
+        if template_ids:
+            t_parent = template_ids[0]
+            for title, fn in [
+                ("🎬 Reel Template",     build_reel_template),
+                ("💬 Story Template",    build_story_template),
+                ("📷 Feedpost Template", build_feedpost_template),
+            ]:
+                try:
+                    child_id = create_child_page(t_parent, title)
+                    if child_id:
+                        add_blocks(child_id, fn(refs))
+                        print(f"  ✓  {title}")
+                    else:
+                        print(f"  ⚠  Kon niet aanmaken: {title}")
+                except Exception as e:
+                    print(f"  ✗  {title}: {traceback.format_exc()}")
+        else:
+            print("  ⚠  'Templates' pagina niet gevonden")
+    except Exception as e:
+        print(f"  ✗  Templates sectie: {traceback.format_exc()}")
 
-    print("\n✅ Klaar. Alle pagina's zijn volledig ingevuld en onderling gelinkt.\n")
+    print("\n✅ Klaar.\n")
