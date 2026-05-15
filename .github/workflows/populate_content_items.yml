@@ -1,0 +1,25 @@
+name: Vul content items in
+
+on:
+  workflow_dispatch:
+
+jobs:
+  populate:
+    runs-on: ubuntu-latest
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/maison-bu-marketing-system-W0eBb
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installeer dependencies
+        run: pip install requests
+
+      - name: Vul content items in
+        run: python tools/notion_populate_items.py
