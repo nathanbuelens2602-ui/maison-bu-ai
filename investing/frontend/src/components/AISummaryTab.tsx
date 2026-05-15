@@ -30,7 +30,7 @@ export default function AISummaryTab() {
         <button
           onClick={generate}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-green-700 hover:bg-green-600 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition-colors"
         >
           <Brain size={16} />
           {loading ? 'Generating…' : 'Generate Summary'}
@@ -39,14 +39,10 @@ export default function AISummaryTab() {
 
       <div className="bg-amber-950/50 border border-amber-800/50 rounded-xl p-4 flex gap-3">
         <AlertCircle size={18} className="text-amber-400 shrink-0 mt-0.5" />
-        <p className="text-sm text-amber-300">
-          AI summaries are for informational purposes only. Not financial advice. Always do your own research before making investment decisions.
-        </p>
+        <p className="text-sm text-amber-300">AI summaries are for informational purposes only. Not financial advice. Always do your own research before making investment decisions.</p>
       </div>
 
-      {error && (
-        <div className="bg-red-950 border border-red-800 text-red-300 rounded-lg p-3 text-sm">{error}</div>
-      )}
+      {error && <div className="bg-red-950 border border-red-800 text-red-300 rounded-lg p-3 text-sm">{error}</div>}
 
       {!summary && !loading && (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center text-gray-400">
@@ -59,7 +55,7 @@ export default function AISummaryTab() {
 
       {loading && (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-12 text-center">
-          <RefreshCw size={32} className="animate-spin text-green-500 mx-auto mb-3" />
+          <RefreshCw size={32} className="animate-spin text-brand-500 mx-auto mb-3" />
           <p className="text-gray-400">Analysing your portfolio…</p>
         </div>
       )}
@@ -67,7 +63,7 @@ export default function AISummaryTab() {
       {summary && (
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-green-400">
+            <div className="flex items-center gap-2 text-brand-400">
               <Brain size={18} />
               <span className="text-sm font-medium">Weekly Analysis</span>
             </div>
@@ -75,8 +71,8 @@ export default function AISummaryTab() {
               {new Date(summary.generated_at).toLocaleString()}
             </span>
           </div>
-          <div className="space-y-3">
-            {summary.summary.split('\n').filter(Boolean).map((line, i) => (
+          <div className="prose prose-sm prose-invert max-w-none">
+            {summary.summary.split('\n').map((line, i) => (
               <p key={i} className="text-gray-300 text-sm leading-relaxed">{line}</p>
             ))}
           </div>
